@@ -71,5 +71,5 @@ Don't hand this over as homework. Pick **one** dimension per 1:1, ask for the la
 
 ---
 
-*Part of [ai-product-practice](https://github.com/Elle Anderson/ai-product-practice) by [Elle Anderson](https://www.andersonco.uk). Fork freely, adapt shamelessly, attribute kindly.*
+*Part of [ai-product-practice](https://github.com/Elle Anderson/ai-product-practice) by [Elle Anderson](https://andersonco.uk). Fork freely, adapt shamelessly, attribute kindly.*
 
