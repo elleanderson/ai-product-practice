@@ -1,44 +1,45 @@
-# Pattern: Discovery Synthesis
+# Discovery synthesis
 
-**Job:** Turn a pile of raw discovery material — interview notes, support tickets, survey verbatims — into candidate insights a product team can interrogate, without the AI inventing the conclusions for you.
+A prompt pattern for synthesising a round of customer interview debriefs. Companion to [The Discovery Interview Kit](https://andersonco.uk/discovery-kit.html); it assumes your debriefs follow the kit's shape (said, did, surprised, contradicted).
 
-**When to use:** After 5+ interviews or 50+ tickets, when patterns probably exist but reading everything twice isn't happening. **When not to use:** As a substitute for having attended the interviews. Synthesis of material you never engaged with produces confident summaries of things you can't defend.
+The point of using a model here is speed across volume, not judgement. The pattern is built to keep the judgement with you.
 
-## The pattern
+## The prompt skeleton
 
-```
-You are assisting a product team with discovery synthesis. You will be given raw
-research material. Your job is to surface candidate patterns, NOT conclusions.
+Paste your debriefs (all of them, verbatim, including the awkward ones), then:
 
-Rules:
-1. Every pattern you propose must cite at least two distinct sources from the
-   material (quote a short fragment + its source label).
-2. Separate OBSERVATIONS (what people said/did) from INTERPRETATIONS (what it
-   might mean). Label each explicitly.
-3. Note counter-evidence: for each pattern, search the material for anything
-   that contradicts it and report what you find, including "none found".
-4. List what's MISSING: questions this material cannot answer.
-5. Do not recommend solutions. That is the team's job, later.
+> You are assisting with customer discovery synthesis. Using ONLY the debrief notes provided, produce:
+>
+> 1. OBSERVATIONS: things stated or demonstrated in the notes, each with the interview references that support it. Quote only text that appears verbatim in the notes. Minimum two sources per observation; single-source items go in a separate list called ANECDOTES.
+> 2. CONTRADICTIONS: places where interviews disagree with each other, or where what someone did contradicts what they said.
+> 3. COUNTER-EVIDENCE: anything in the notes that undermines the following hypothesis: [state your hypothesis]. If none exists, say "none found in the notes".
+> 4. GAPS: what these notes cannot tell us, and which questions in the next round would close each gap.
+>
+> Do not produce recommendations, solutions, or interpretations of motive. Do not use any knowledge beyond the notes. Where the notes are thin, say so rather than smoothing over it.
 
-Material follows:
-[PASTE MATERIAL]
-```
+Then, and only in a second pass after you have read the first output against the source notes:
 
-## What good output looks like
+> Given the observations and contradictions above, list candidate INTERPRETATIONS, each labelled with which observations support it and what evidence would falsify it.
 
-- Patterns with citations you can check in seconds
-- A visible observation/interpretation boundary (this is the anti-hallucination seam — if it blurs, stop trusting the output)
-- A counter-evidence section that occasionally kills a pattern you liked
-- A "missing" list that becomes your next round's discussion guide
+## Why the rules are shaped this way
 
-## Known failure modes
+- **Two sources per observation** enforces the same rule a human synthesiser should follow: one vivid interview is an anecdote wearing a trench coat.
+- **Verbatim quotes only** is the check against invented customers. Spot-check every quote against the notes; a model that has started paraphrasing has started authoring.
+- **Counter-evidence as an explicit section** counters the model's instinct to be agreeable about your hypothesis. Asking for it by name roughly doubles the chance of getting it.
+- **Interpretations in a second pass** keeps observation and interpretation from blending, which is the failure that quietly poisons roadmaps.
 
-- **Frequency ≠ importance.** The model weights what's mentioned often, not what's felt deeply. One devastating churn story can matter more than nine mild grumbles; only a human who was in the room knows which is which.
-- **Coherence bias.** Given messy material, the model will find *a* story. Run it twice with the material shuffled; if the patterns change order dramatically, they're weaker than they read.
-- **Vocabulary flattening.** Customers' odd word choices are often the insight. Synthesis normalises language — go back to verbatims before naming anything.
-- **The citation shortcut.** Under length pressure the model may cite two sources that don't quite say what the pattern claims. Spot-check one citation per pattern, every time. The day you stop checking is the day it drifts.
+## Documented failure modes
 
-## Field note
+- **Confabulated quotes.** The most dangerous, because they sound exactly like your customers. Spot-check quotes against source before anything travels.
+- **Frequency worship.** Models count well and weigh badly: nine mild grumbles will outrank one devastating churn story unless a human re-weights. Weighting stays with whoever was in the room.
+- **Smoothing.** Contradictions get averaged into mush. If the CONTRADICTIONS section comes back empty across eight interviews, be suspicious of the synthesis, not proud of the consistency.
+- **Hypothesis sycophancy.** Even with the counter-evidence instruction, phrasing your hypothesis warmly biases the read. State it coldly, or have a colleague state the rival hypothesis and run the pattern twice.
+- **Scope creep into recommendation.** The model will offer solutions if allowed a millimetre. The decisions section of your synthesis belongs to the team, on the record, in the kit's closing format.
 
-The counter-evidence rule (#3) earns its place the first time it saves you from presenting a pattern your stakeholder can refute from memory. It also changes team behaviour: people start asking "what's the counter-evidence?" of *human* analysis too — which was the point all along.
+## The rule that governs the pattern
 
+The model reads the pile; you keep the judgement. If a finding would change a roadmap decision, someone re-reads the underlying debriefs before it does.
+
+---
+
+Free to use and share, with attribution. Part of [AI Product Practice](../README.md) by [Elle Fitz Anderson](https://andersonco.uk).
